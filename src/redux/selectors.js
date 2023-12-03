@@ -1,4 +1,4 @@
 export const selectTodos = state => {
   console.log(state);
-  return state;
+  return state.todos;
 };

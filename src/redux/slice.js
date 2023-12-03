@@ -2,11 +2,13 @@ import { createSlice, nanoid } from '@reduxjs/toolkit';
 
 export const todoSlice = createSlice({
   name: 'todos',
-  initialState: [],
+  initialState: {
+    todos: [],
+  },
   reducers: {
     addTodo: {
       reducer(state, action) {
-        state.push(action.payload);
+        state.todos.push(action.payload);
       },
       prepare(text) {
         return {
@@ -17,9 +19,24 @@ export const todoSlice = createSlice({
         };
       },
     },
-    deleteTodo: (state, action) => {},
+    deleteTodo: (state, action) => {
+      console.log(action);
+      state.todos = state.todos.filter(todo => todo.id !== action.payload);
+      console.log(state);
+    },
+    updateTodos: (state, { payload }) => {
+      const { id, changedText } = payload;
+      state.todos = state.todos.map(todo =>
+        todo.id === id
+          ? {
+              ...todo,
+              text: changedText,
+            }
+          : todo
+      );
+    },
   },
 });
 
-export const { addTodo, deleteTodo } = todoSlice.actions;
+export const { addTodo, deleteTodo, updateTodos } = todoSlice.actions;
 // const todoReducer = todoSlice.reducer;

@@ -8,15 +8,19 @@ import { store } from './redux/store';
 // import { App } from 'components';
 import App from './components/App/App';
 import { GlobalStyles, theme } from 'styles';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistor } from './redux/store';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Provider store={store}>
-      {' '}
-      <ThemeProvider theme={theme}>
-        <Global styles={GlobalStyles} />
-        <App />
-      </ThemeProvider>
-    </Provider>
+    <PersistGate loading={null} persistor={persistor}>
+      <Provider store={store}>
+        {' '}
+        <ThemeProvider theme={theme}>
+          <Global styles={GlobalStyles} />
+          <App />
+        </ThemeProvider>
+      </Provider>
+    </PersistGate>
   </React.StrictMode>
 );
